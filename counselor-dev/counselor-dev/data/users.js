@@ -8,29 +8,20 @@ const stellarService = require("../services/stellarService");
 const stellarConfig = require("../settings").stellarConfig;
 const users = collections.users;
 const articles = collections.articles;
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 require("mongoose-uuid2")(mongoose);
-var uuid = require("node-uuid");
-require("mongoose-uuid2")(mongoose);
-const uuidv5 = require("uuid/v5");
-var UUID = mongoose.Types.UUID;
 const mongoConfig = require("../settings");
 const userssmodel = require("../models/users");
 const articlessmodel = require("../models/articles");
 
 mongoose.Promise = global.Promise;
 
-const conn = mongoose.connect(mongoConfig.env.serverUrl, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  dbName: mongoConfig.env.database,
-});
-
-mongoose.connection
-  .once("open", () =>
+mongoose
+  .connect(mongoConfig.env.serverUrl, { dbName: mongoConfig.env.database })
+  .then(() =>
     console.log("Connected to Atlas Using Mongoose inside data/users")
   )
-  .on("error", (error) => {
+  .catch((error) => {
     console.log("error is: " + error);
   });
 

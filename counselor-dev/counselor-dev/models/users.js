@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-var uuid = require("node-uuid");
+const { v4: uuidv4 } = require("uuid");
 require("mongoose-uuid2")(mongoose);
 
 var validateEmail = function (email) {
@@ -8,7 +8,7 @@ var validateEmail = function (email) {
 };
 
 const usersSchema = mongoose.Schema({
-  _id: { type: mongoose.Schema.Types.UUID, default: uuid.v5 },
+  _id: { type: mongoose.Schema.Types.UUID, default: uuidv4 },
   email: {
     type: mongoose.Schema.Types.String,
     trim: true,
