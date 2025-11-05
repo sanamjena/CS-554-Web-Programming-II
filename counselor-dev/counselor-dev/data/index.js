@@ -1,16 +1,21 @@
-const MongoClient = require("mongodb").MongoClient;
+const { MongoClient, ServerApiVersion } = require("mongodb");
 const mongoConfig = require("../settings").mongoConfig1;
 const mongoose = require("mongoose");
 
-let _connection = undefined;
+let _client = undefined;
 let _db = undefined;
 
 const dbConnection = async () => {
-  if (!_connection) {
-    _connection = await MongoClient.connect(mongoConfig.serverUrl, {
-      useNewUrlParser: true,
+  if (!_client) {
+    _client = new MongoClient(mongoConfig.serverUrl, {
+      serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+      },
     });
-    _db = await _connection.db(mongoConfig.database);
+    await _client.connect();
+    _db = _client.db(mongoConfig.database);
   }
 
   return _db;

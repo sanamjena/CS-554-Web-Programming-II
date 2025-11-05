@@ -2,7 +2,7 @@ const gulp = require("gulp");
 const concatenate = require("gulp-concat");
 const cleanCSS = require("gulp-clean-css");
 const autoPrefix = require("gulp-autoprefixer");
-const gulpSASS = require("gulp-sass");
+const gulpSASS = require("gulp-sass")(require("sass"));
 const rename = require("gulp-rename");
 const imagemin = require('gulp-imagemin');
 const uglify = require('gulp-uglify');
@@ -34,7 +34,7 @@ gulp.task('sass', function (done) {
         .pipe(gulp.dest("./public/css/"))
         .pipe(
             autoPrefix({
-                browsers: ["last 2 versions"],
+                overrideBrowserslist: ["last 2 versions"],
                 cascade: false
             })
         )
